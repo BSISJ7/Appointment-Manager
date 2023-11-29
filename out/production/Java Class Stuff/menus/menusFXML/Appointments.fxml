@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="544.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="menus.Appointments">
+   <children>
+      <ComboBox fx:id="custCbox" layoutX="45.0" layoutY="321.0" prefHeight="25.0" prefWidth="174.0" />
+      <Label alignment="CENTER" layoutX="2.0" prefHeight="44.0" prefWidth="600.0" text="Appointments">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
+      <Label layoutX="45.0" layoutY="297.0" text="Customers" />
+      <Label layoutX="410.0" layoutY="295.0" text="Appointment Type" />
+      <TextField fx:id="typeTextField" layoutX="411.0" layoutY="320.0" promptText="Appointment Type" />
+      <DatePicker fx:id="datePicker" layoutX="45.0" layoutY="393.0" promptText="Appointment Date" />
+      <Label layoutX="45.0" layoutY="368.0" text="Appointment Date" />
+      <Label layoutX="413.0" layoutY="367.0" text="Start Time" />
+      <Label layoutX="45.0" layoutY="446.0" text="Appointment Duration" />
+      <Spinner fx:id="startHourSpin" layoutX="411.0" layoutY="392.0" prefHeight="25.0" prefWidth="57.0" />
+      <Spinner fx:id="startMinSpin" layoutX="481.0" layoutY="392.0" prefHeight="25.0" prefWidth="57.0" />
+      <Label layoutX="449.0" layoutY="204.0" prefHeight="17.0" prefWidth="11.0" text=":" />
+      <Spinner fx:id="endHourSpin" layoutX="84.0" layoutY="471.0" prefHeight="25.0" prefWidth="57.0" />
+      <Label layoutX="45.0" layoutY="475.0" prefHeight="17.0" prefWidth="41.0" text="Hours" />
+      <Spinner fx:id="endMinSpin" layoutX="206.0" layoutY="471.0" prefHeight="25.0" prefWidth="57.0" />
+      <Label layoutX="157.0" layoutY="475.0" prefHeight="17.0" prefWidth="49.0" text="Minutes" />
+      <Label layoutX="405.0" layoutY="451.0" text="Appointment End Time" />
+      <Label fx:id="apptTimeLbl" layoutX="405.0" layoutY="480.0" prefHeight="17.0" prefWidth="149.0" text="00:00" />
+      <TableView fx:id="apptTableView" layoutX="1.0" layoutY="44.0" onMouseClicked="#loadAppointment"
+                 prefHeight="236.0" prefWidth="600.0">
+         <columns>
+            <TableColumn fx:id="custIDColumn" prefWidth="162.0" text="Customer" />
+            <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="100.0" text="Date" />
+            <TableColumn fx:id="startDateColumn" prefWidth="100.0" text="Start Time" />
+            <TableColumn fx:id="endDateColumn" prefWidth="100.0" text="End Time" />
+            <TableColumn fx:id="typeColumn" maxWidth="200.0" prefWidth="136.0" text="Type" />
+         </columns>
+      </TableView>
+      <HBox fx:id="updateHBox" alignment="CENTER" layoutY="520.0" prefHeight="44.0" prefWidth="602.0" spacing="40.0">
+         <children>
+            <Button onAction="#showAddMenu" mnemonicParsing="false" text="New Appointment" />
+            <Button fx:id="updateAppointment" mnemonicParsing="false" onAction="#updateAppointment" text="Update Appointment" />
+            <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete Appointment" />
+            <Button fx:id="openMainMenu" mnemonicParsing="false" onAction="#openMainMenu" text="Open Main Menu" />
+         </children>
+      </HBox>
+   </children>
+   <HBox fx:id="addHBox" alignment="CENTER" layoutY="513.0" prefHeight="51.0" prefWidth="602.0" spacing="150.0"
+         visible="false">
+      <children>
+         <Button mnemonicParsing="false" onAction="#addAppointment" text="Accept" />
+         <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      </children>
+   </HBox>
+</AnchorPane>
