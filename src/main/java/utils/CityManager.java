@@ -39,7 +39,4 @@ public class CityManager {
         Collections.sort(cityList);
     }
 
-    public int size() {
-        return cityList.size();
-    }
 }

@@ -55,7 +55,7 @@ public class Customer implements Comparable{
         phoneProperty().set(phoneNum);
 
         int maxID = 1;
-        for(Address addresses : dbData.getAddressList()){
+        for(Address addresses : DBData.getAddressList()){
             maxID = Math.max(maxID, addresses.getAddressID());
             if(addresses.matches(addressFieldOne, addressFieldTwo, postalCode, phoneNum)) {
                 addressId = addresses.getAddressID();
@@ -63,7 +63,7 @@ public class Customer implements Comparable{
             }
         }
         addressId = maxID+1;
-        dbData.getAddressList().add(new Address(addressId, addressFieldOne, addressFieldTwo, cityID, postalCode, phoneNum));
+        DBData.getAddressList().add(new Address(addressId, addressFieldOne, addressFieldTwo, cityID, postalCode, phoneNum));
     }
 
 
