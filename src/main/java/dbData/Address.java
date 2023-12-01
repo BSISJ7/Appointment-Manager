@@ -29,11 +29,11 @@ public class Address implements Comparable<Address>{
         this.addressID = addressID;
     }
 
-    public String getaddressFieldOne() {
+    public String getAddressFieldOne() {
         return addressFieldOne;
     }
 
-    public void setaddressFieldOne(String addressFieldOne) {
+    public void setAddressFieldOne(String addressFieldOne) {
         this.addressFieldOne = addressFieldOne;
     }
 
@@ -82,7 +82,7 @@ public class Address implements Comparable<Address>{
                 && (address.phoneNum.equalsIgnoreCase(phoneNum)) )
             return 0;
         else {
-            String addressOne = address.getaddressFieldOne() + " " + address.getAddressFieldTwo();
+            String addressOne = address.getAddressFieldOne() + " " + address.getAddressFieldTwo();
             String addressTwo = addressFieldOne + " " + addressFieldTwo;
             return addressOne.compareToIgnoreCase(addressTwo);
         }

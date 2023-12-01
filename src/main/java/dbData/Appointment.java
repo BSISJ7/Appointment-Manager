@@ -12,7 +12,7 @@ public class Appointment implements Comparable{
 
     private int appointmentID;
     private int customerID;
-    private int userID;
+    private String username;
     private Timestamp startDate;
     private Timestamp endDate;
     private String type;
@@ -25,7 +25,7 @@ public class Appointment implements Comparable{
 
 
     public String toString(){
-        return "[ID]: " + appointmentID + " [User]: " + dbData.findUserByID(userID).get() + " [Customer]: "
+        return "[ID]: " + appointmentID + " [User]: " + dbData.findUserByName(username).get() + " [Customer]: "
                 + dbData.findCustomerByID(customerID).get() + " [Date]: " + startDate + "  [Type]: " + type;
     }
 
@@ -58,12 +58,12 @@ public class Appointment implements Comparable{
     public Appointment(){
     }
 
-    public int getUserID() {
-        return userID;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getType() {

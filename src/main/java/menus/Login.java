@@ -42,9 +42,6 @@ public class Login implements Initializable {
     @FXML
     private TextField usernameField;
 
-    private Stage primaryStage;
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Pane dummyPane = new Pane();
@@ -67,17 +64,17 @@ public class Login implements Initializable {
         }
     }
 
-    public void login(ActionEvent actionEvent) {
+    public void login() {
         try {
             String password = passField.isVisible() ? passField.getText() : visiblePassField.getText();
             DBConnector.login(usernameField.getText(), password);
             dbConnector.setAppointments();
-            if (getLoggedInUser().getUserID() != -1 || (usernameField.getText().equalsIgnoreCase("Guest") && passField.getText().equals("pass"))){
+            if (!getLoggedInUser().getUsername().isEmpty() || (usernameField.getText().equalsIgnoreCase("Guest") && passField.getText().equals("pass"))){
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/menusFXML/MainMenu.fxml"));
                     Stage stage = (Stage) passField.getScene().getWindow();
                     stage.setScene( new Scene(loader.load()));
-                    MainMenu controller = loader.<MainMenu>getController();
+                    MainMenu controller = loader.getController();
                     UserLogs.saveLoginInfo(getLoggedInUser());
                     loader.setController(controller);
                     stage.show();

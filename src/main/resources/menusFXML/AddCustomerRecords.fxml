@@ -30,13 +30,13 @@
         <padding>
             <Insets bottom="10.0"/>
         </padding>
-        <Button fx:id="updateCustBtn" mnemonicParsing="false" onAction="#updateCustomer" text="Update Customer"
+        <Button mnemonicParsing="false" onAction="#updateCustomer" text="Update Customer"
                 GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
-        <Button fx:id="delCustBtn" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete Customer"
+        <Button mnemonicParsing="false" onAction="#deleteCustomer" text="Delete Customer"
                 GridPane.columnIndex="2" GridPane.halignment="CENTER"/>
-        <Button fx:id="mainMenuBtn" mnemonicParsing="false" onAction="#openMainMenu" text="main.java.Main Menu"
+        <Button mnemonicParsing="false" onAction="#openMainMenu" text="main.java.Main Menu"
                 GridPane.columnIndex="3" GridPane.halignment="CENTER"/>
-        <Button fx:id="newCustBtn" mnemonicParsing="false" onAction="#createNewCustomer" text="New Customer"
+        <Button mnemonicParsing="false" onAction="#createNewCustomer" text="New Customer"
                 GridPane.halignment="CENTER"/>
     </GridPane>
     <GridPane alignment="CENTER" hgap="20.0" layoutY="30.0" prefHeight="342.0" prefWidth="600.0" vgap="20.0">
@@ -58,16 +58,12 @@
             <TextField fx:id="nameTextField" promptText="Name"/>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-            <children>
-                <Label text="Phone Number"/>
-                <TextField fx:id="phoneTextField" promptText="Phone Number"/>
-            </children>
+            <Label text="Phone Number"/>
+            <TextField fx:id="phoneTextField" promptText="Phone Number"/>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-            <children>
-                <Label text="Address 1"/>
-                <TextField fx:id="addressFieldOne" prefHeight="25.0" prefWidth="274.0" promptText="Address 1"/>
-            </children>
+            <Label text="Address 1"/>
+            <TextField fx:id="addressFieldOne" prefHeight="25.0" prefWidth="274.0" promptText="Address 1"/>
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <Label text="Address 2"/>

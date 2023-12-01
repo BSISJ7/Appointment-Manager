@@ -215,7 +215,7 @@ public class Appointments implements Initializable {
             appointment.setStartDate(getStartTime());
             appointment.setEndDate(getEndTime());
             appointment.setType(typeTextField.getText());
-            appointment.setUserID(DBConnector.getLoggedInUser().getUserID());
+            appointment.setUsername(DBConnector.getLoggedInUser().getUsername());
             appointment.createNewID();
             appointment.setCustomerID(customerComboBox.getSelectionModel().getSelectedItem().getCustomerID());
 

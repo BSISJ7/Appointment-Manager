@@ -1,13 +1,13 @@
 package dbData;
 
+import static java.lang.CharSequence.compare;
+
 public class User implements Comparable{
 
-    private int userID = -1;
     private String username = "";
     private String password = "";
 
-    public User(int userID, String username, String password) {
-        this.userID = userID;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -17,17 +17,8 @@ public class User implements Comparable{
     }
 
     public void reset(){
-        userID = -1;
         username = "";
         password = "";
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getUsername() {
@@ -53,7 +44,7 @@ public class User implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        return Integer.compare(this.userID, ((User) o).userID);
+    public int compareTo(Object object) {
+        return compare(this.username, ((User) object).username);
     }
 }

@@ -16,6 +16,10 @@ public class DBConnector {
     private static final String dbUsername = "U06og1";
     private static final String dbPassword = "53688825281";
     private static final String dbURL = "jdbc:mysql://"+serverAddress+"/"+dbName;
+    private static final String localDbName = "AppointmentManagerDB";
+    private static final String localDbURL = "jdbc:mysql://localhost/"+localDbName;
+    public static final String localDBUsername = System.getenv("LOCAL_DB_USERNAME");
+    public static final String localDBPassword = System.getenv("LOCAL_DB_PASSWORD");
     private static Connection dbConn;
 
     private static boolean connected = false;
@@ -81,7 +85,6 @@ public class DBConnector {
         ResultSet rs = userStatement.executeQuery();
         if(rs.next()) {
             if(rs.getString(2).equalsIgnoreCase(username) && rs.getString(3).equals(password)) {
-                loggedInUser.setUserID(rs.getInt(1));
                 loggedInUser.setUsername(rs.getString(2));
                 loggedInUser.setPassword(rs.getString(3));
             }
@@ -128,12 +131,12 @@ public class DBConnector {
         while(rsDate.next()){
             Address address = new Address();
             address.setAddressID(rsDate.getInt(1));
-            address.setaddressFieldOne(rsDate.getString(2));
+            address.setAddressFieldOne(rsDate.getString(2));
             address.setAddressFieldTwo(rsDate.getString(3));
             address.setCityID(rsDate.getInt(4));
             address.setPostalCode(rsDate.getString(5));
             address.setPhoneNum(rsDate.getString(6));
-            dbData.getAddressList().add(address);
+            DBData.getAddressList().add(address);
         }
     }
 
@@ -168,7 +171,6 @@ public class DBConnector {
         ResultSet rsDate = userStatement.executeQuery();
         while(rsDate.next()){
             User user = new User();
-            user.setUserID(rsDate.getInt(1));
             user.setUsername(rsDate.getString(2));
             user.setPassword(rsDate.getString(3));
             dbData.addUserToList(user);
@@ -177,7 +179,7 @@ public class DBConnector {
 
     /**
      * Loads the country data into the country list.
-     * @throws SQLException
+     * @throws SQLException Throws an exception if there is an error with the SQL query
      */
     public void setCountries() throws SQLException {
         if (!connected)
@@ -195,7 +197,7 @@ public class DBConnector {
 
     /**
      * Loads the appointment data into the current user's appointment list and the appointment list of all users.
-     * @throws SQLException
+     * @throws SQLException Throws an exception if there is an error with the SQL query
      */
     public void setAppointments() throws SQLException {
         if (!connected)
@@ -209,17 +211,17 @@ public class DBConnector {
             Appointment appointment = new Appointment();
             appointment.setAppointmentID(rsDate.getInt(1));
             appointment.setCustomerID(rsDate.getInt(2));
-            appointment.setUserID(rsDate.getInt(3));
-            appointment.setType(rsDate.getString(8));
-            appointment.setStartDate(rsDate.getTimestamp(10));
-            appointment.setEndDate(rsDate.getTimestamp(11));
-            if(!rsDate.getTimestamp(10).before(Timestamp.valueOf(LocalDateTime.now()))
-                    && appointment.getUserID() == loggedInUser.getUserID()) {
+            appointment.setUsername(rsDate.getString(3));
+            appointment.setType(rsDate.getString(4));
+            appointment.setStartDate(rsDate.getTimestamp(5));
+            appointment.setEndDate(rsDate.getTimestamp(6));
+            if(!rsDate.getTimestamp(7).before(Timestamp.valueOf(LocalDateTime.now()))
+                    && appointment.getUsername() == loggedInUser.getUsername()) {
                 dbData.getAppointmentList().add(appointment);//Adds current user's appointments to appointments list.
             }else if(rsDate.getTimestamp(10).before(Timestamp.valueOf(LocalDateTime.now()))){
                 deleteAppointment(appointment);//Deletes old appointments.
             }else if(!rsDate.getTimestamp(10).before(Timestamp.valueOf(LocalDateTime.now()))
-                    && appointment.getUserID() != loggedInUser.getUserID()) {
+                    && appointment.getUsername() != loggedInUser.getUsername()) {
                 DBData.getReportsAppointmentList().add(appointment);//Adds appointments of other users to reports list.
             }
         }
@@ -233,26 +235,16 @@ public class DBConnector {
         PreparedStatement AppointmentStatement = dbConn.prepareStatement(INSERT_APPOINTMENT);
 
         AppointmentStatement.setInt(1, appointment.getCustomerID());
-        AppointmentStatement.setInt(2, loggedInUser.getUserID());
-        AppointmentStatement.setString(3, "not needed");
-        AppointmentStatement.setString(4, "not needed");
-        AppointmentStatement.setString(5, "not needed");
-        AppointmentStatement.setString(6, "not needed");
-        AppointmentStatement.setString(7, appointment.getType());
-        AppointmentStatement.setString(8, "not needed");
-        AppointmentStatement.setTimestamp(9, appointment.getStartDate());
-        AppointmentStatement.setTimestamp(10, appointment.getEndDate());
-        AppointmentStatement.setTimestamp(11, Timestamp.valueOf(LocalDateTime.now()));
-        AppointmentStatement.setString(12, loggedInUser.getUsername());
-        AppointmentStatement.setTimestamp(13, Timestamp.valueOf(LocalDateTime.now()));
-        AppointmentStatement.setString(14, loggedInUser.getUsername());
+        AppointmentStatement.setString(2, appointment.getType());
+        AppointmentStatement.setTimestamp(3, appointment.getStartDate());
+        AppointmentStatement.setTimestamp(4, appointment.getEndDate());
+        AppointmentStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+        AppointmentStatement.setString(6, loggedInUser.getUsername());
+        AppointmentStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
         AppointmentStatement.executeUpdate();
     }
 
     public void deleteCustomer(Customer customer) throws SQLException {
-        if (!connected)
-            return;
-        dbConn.setAutoCommit(false);
 
         //Removes appointments associated with the customer from reports list.
         ArrayList<Appointment> appointmentsToRemove = new ArrayList<>();
@@ -273,6 +265,10 @@ public class DBConnector {
             }
         }
         dbData.getAppointmentList().removeAll(appointmentsToRemove);
+
+        if (!connected)
+            return;
+        dbConn.setAutoCommit(false);
 
         PreparedStatement customerStatement = dbConn.prepareStatement(DELETE_CUSTOMER);
         customerStatement.setInt(1, customer.getCustomerID());
@@ -368,7 +364,7 @@ public class DBConnector {
         PreparedStatement customerStatement = dbConn.prepareStatement(INSERT_UPDATE_ADDRESS);
 
         customerStatement.setInt(1, address.getAddressID());
-        customerStatement.setString(2, address.getaddressFieldOne());
+        customerStatement.setString(2, address.getAddressFieldOne());
         customerStatement.setString(3, address.getAddressFieldTwo());
         customerStatement.setInt(4, address.getCityID());
         customerStatement.setString(5, address.getPostalCode());
@@ -379,7 +375,7 @@ public class DBConnector {
         customerStatement.setString(10, loggedInUser.getUsername());
 
         customerStatement.setInt(11, address.getAddressID());
-        customerStatement.setString(12, address.getaddressFieldOne());
+        customerStatement.setString(12, address.getAddressFieldOne());
         customerStatement.setString(13, address.getAddressFieldTwo());
         customerStatement.setInt(14, address.getCityID());
         customerStatement.setString(15, address.getPostalCode());
@@ -424,7 +420,6 @@ public class DBConnector {
     }
 
     public static void setLoggedInUser(User user) {
-        loggedInUser.setUserID(user.getUserID());
         loggedInUser.setUsername(user.getUsername());
         loggedInUser.setPassword(user.getPassword());
     }

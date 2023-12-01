@@ -1,13 +1,10 @@
 package menus;
 
 import dbData.*;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -117,11 +114,6 @@ public class CustomerRecords implements Initializable {
         cityCol.setCellValueFactory(cellData -> cellData.getValue().cityNameProperty());
         countryCol.setCellValueFactory(cellData -> cellData.getValue().countryNameProperty());
         postalCol.setCellValueFactory(cellData -> cellData.getValue().postalProperty());
-
-        Platform.runLater(() -> {
-            System.out.println("Is addressfield length null: "+FieldLength.addressFieldTwo.length);
-            System.out.println("Is addressfield length null: "+FieldLength.addressFieldTwo == null);
-        });
     }
 
 
@@ -178,7 +170,7 @@ public class CustomerRecords implements Initializable {
             alert.setTitle("Customer Added");
             alert.setHeaderText("A New Customer Has Been Added");
             Optional<ButtonType> okayPressed = alert.showAndWait();
-            while (!okayPressed.isPresent()) ;
+            while (okayPressed.isEmpty()) ;
 
             addGridPane.setVisible(false);
             updateGridPane.setVisible(true);
@@ -277,11 +269,9 @@ public class CustomerRecords implements Initializable {
      * @return True if all fields are filled out.
      */
     private boolean isInformationFilledOut(){
-        BlankErrors blankError = getBlankErrors();
-
-
-        if(!blankError.equals(BlankErrors.NONE)){
-            Alert alert = new Alert(Alert.AlertType.ERROR, blankError.alert+" Please fill out the rest of the" +
+        BlankErrors emptyFieldError = getEmptyFieldErrors();
+        if(!emptyFieldError.equals(BlankErrors.NONE)){
+            Alert alert = new Alert(Alert.AlertType.ERROR, emptyFieldError.alert+" Please fill out the rest of the" +
                     " customer information before submitting.");
             alert.setTitle("Customer Records Error");
             alert.setHeaderText("Customer information missing.");
@@ -293,7 +283,7 @@ public class CustomerRecords implements Initializable {
         return true;
     }
 
-    private BlankErrors getBlankErrors() {
+    private BlankErrors getEmptyFieldErrors() {
         BlankErrors blankError = BlankErrors.NONE;
         if(nameTextField.getText().isEmpty())
             blankError = BlankErrors.NAME;

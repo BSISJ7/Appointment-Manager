@@ -1,7 +1,9 @@
 C:\Program Files\Programming\Appointment Manager\src\main\java\dbData\Address.java
-C:\Program Files\Programming\Appointment Manager\src\main\java\utils\DateConversionFactory.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\menus\Reports.java
+C:\Program Files\Programming\Appointment Manager\src\main\java\utils\CityManager.java
+C:\Program Files\Programming\Appointment Manager\src\main\java\App.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\menus\Appointments.java
+C:\Program Files\Programming\Appointment Manager\src\main\java\utils\DictionaryManager.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\Main.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dbData\City.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dbData\Customer.java
@@ -10,6 +12,7 @@ C:\Program Files\Programming\Appointment Manager\src\main\java\menus\Login.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dbData\Appointment.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dbData\User.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\menus\CustomerRecords.java
+C:\Program Files\Programming\Appointment Manager\src\main\java\utils\NamesManager.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dataIO\DBConnector.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dataIO\UserLogs.java
 C:\Program Files\Programming\Appointment Manager\src\main\java\dbData\Country.java

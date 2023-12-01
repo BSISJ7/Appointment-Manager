@@ -13,13 +13,13 @@ public class UserLogs {
 
     /**
      * Logs when a new user logs into the program.
-     * @param user
+     * @param user The user that has logged in.
      */
     public static void saveLoginInfo(User user){
         try(BufferedWriter fileWriter = new BufferedWriter(new FileWriter(USER_LOGS_FILE, true))){
             StringBuilder stringBuilder = new StringBuilder();
             Formatter formatter = new Formatter(stringBuilder);
-            formatter.format(LOG_FORMAT, user.getUsername(), LocalDateTime.now().toString());
+            formatter.format(LOG_FORMAT, user.getUsername(), LocalDateTime.now());
             fileWriter.write(stringBuilder.toString());
         }catch (IOException e){
             e.printStackTrace();

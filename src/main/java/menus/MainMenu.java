@@ -64,7 +64,7 @@ public class MainMenu implements Initializable {
         appointmentTableView.setItems(dbData.getAppointmentList());
         customerIDColumn.setCellValueFactory(cellData -> cellData.getValue().customerIDProperty());
         customerNameColumn.setCellValueFactory(cellData -> dbData.getCustomerList().stream().filter(customer ->
-                        customer.getCustomerID() == Integer.parseInt(cellData.getValue().customerIDProperty().get()))
+                        customer.getCustomerID() == cellData.getValue().getCustomerID())
                 .findFirst().get().customerNameProperty());
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         startDateColumn.setCellValueFactory(cellData -> cellData.getValue().startDateProperty());
@@ -91,7 +91,7 @@ public class MainMenu implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/menusFXML/Appointments.fxml"));
                 Stage stage = (Stage) mainPane.getScene().getWindow();
                 stage.setScene( new Scene(loader.load()));
-                Appointments controller = loader.<Appointments>getController();
+                Appointments controller = loader.getController();
                 loader.setController(controller);
                 stage.show();
             }catch (IOException e){
@@ -155,7 +155,7 @@ public class MainMenu implements Initializable {
             FXMLLoader loader = new FXMLLoader(MainMenu.class.getResource("/menusFXML/MainMenu.fxml"));
             Stage stage = (Stage) mainPane.getScene().getWindow();
             stage.setScene( new Scene(loader.load()));
-            MainMenu controller = loader.<MainMenu>getController();
+            MainMenu controller = loader.getController();
             loader.setController(controller);
             stage.show();
         }catch (IOException e){

@@ -43,9 +43,7 @@ public class DBData {
 
 
     public Optional<Customer> findCustomerByID(int customerID) throws NoSuchElementException {
-        System.out.println("Searching for: "+customerID);
         for(Customer customer : customerList){
-            System.out.println("Found: "+customer.getCustomerID() + " " + customer.getCustomerName());
             if(customer.getCustomerID() == customerID)
                 return Optional.of(customer);
         }
@@ -53,9 +51,9 @@ public class DBData {
     }
 
 
-    public Optional<User> findUserByID(int userID){
+    public Optional<User> findUserByName(String username){
         for(User users : userList){
-            if(users.getUserID() == userID) {
+            if(users.getUsername().equalsIgnoreCase(username)) {
                 return Optional.of(users);
             }
         }
@@ -66,7 +64,7 @@ public class DBData {
         userList.add(user);
     }
 
-    public ArrayList<Address> getAddressList() {
+    public static ArrayList<Address> getAddressList() {
         return addressList;
     }
 

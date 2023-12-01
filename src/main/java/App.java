@@ -31,7 +31,6 @@ public class App extends Application {
         try {
             DBConnector.dbConnector.connectToDatabase();
             dbData.populateDbInfo();
-            System.out.println("Database connection successful.");
         } catch (SQLException | NullPointerException throwable) {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle("Database Connection Failed");
@@ -62,26 +61,27 @@ public class App extends Application {
     }
 
     private void quickstart(){
-        User newUser = new User(999, NamesManager.getNamesList().getRandomName(), "password");
+        User newUser = new User(NamesManager.getNamesList().getRandomName(), "password");
         dbData.addUserToList(newUser);
         setLoggedInUser(newUser);
         for(int x = 0; x < 5; x++) {
-            Customer NewCustomeromer = new Customer();
-            NewCustomeromer.setCustomerName(NamesManager.getNamesList().getRandomName());
-            NewCustomeromer.setCustomerID(x);
-            NewCustomeromer.setCityName(CityManager.getCityManager().getRandomCity());
+            Customer newCustomer = new Customer();
+            newCustomer.setCustomerName(NamesManager.getNamesList().getRandomName());
+            newCustomer.setCustomerID(x);
+            newCustomer.setCityName(CityManager.getCityManager().getRandomCity());
             int randNum = new Random(System.nanoTime()).nextInt(1000);
-            NewCustomeromer.setAddressFieldOne(randNum + " " + DictionaryManager.getDictionary().getRandomWord() + " "
+            newCustomer.setAddressFieldOne(randNum + " " + DictionaryManager.getDictionary().getRandomWord() + " "
                     + DictionaryManager.getDictionary().getRandomWord() + " Street");
-            NewCustomeromer.setCountryName("United States");
-            NewCustomeromer.setPostalCode("12345");
-            NewCustomeromer.setPhoneNumber("123-456-7890");
-            dbData.addCustomerToList(NewCustomeromer);
+            newCustomer.setCountryName("United States");
+            newCustomer.setPostalCode("12345");
+            newCustomer.setPhoneNumber("123-456-7890");
+            dbData.addCustomerToList(newCustomer);
+
 
             Appointment newAppointment = new Appointment();
-            newAppointment.setUserID(newUser.getUserID());
             newAppointment.setCustomerID(x);
             newAppointment.setType(DictionaryManager.getDictionary().getRandomWord());
+            newAppointment.setUsername(newUser.getUsername());
 
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MONTH, x <= 1 ? 0 : x);

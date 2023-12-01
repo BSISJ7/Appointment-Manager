@@ -7,8 +7,29 @@
   <name>Archetype - Appointment Manager</name>
   <url>http://maven.apache.org</url>
 
-  <dependencies>
 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jpro - sandec repository</id>
+      <url>https://sandec.jfrog.io/artifactory/repo</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <repositories>
+    <repository>
+      <id>Sandec</id>
+      <name>Sandec Repository</name>
+      <url>https://sandec.jfrog.io/artifactory/repo/</url>
+    </repository>
+
+    <repository>
+      <id>mysql</id>
+      <name>Sandec Repository</name>
+      <url>https://sandec.jfrog.io/artifactory/repo/</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
@@ -50,6 +71,25 @@
       <artifactId>javafx-graphics</artifactId>
       <version>21-ea+24</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.sandec.jpro</groupId>
+      <artifactId>jpro-webapi</artifactId>
+      <version>2023.3.0-M3</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>one.jpro.platform</groupId>
+      <artifactId>jpro-image-manager</artifactId>
+      <version>0.2.7-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>one.jpro.platform</groupId>
+      <artifactId>jpro-media</artifactId>
+      <version>0.2.7-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -84,6 +124,19 @@
           <source>21</source>
           <target>21</target>
           <compilerArgs>--enable-preview</compilerArgs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>one.jpro</groupId>
+        <artifactId>jpro-maven-plugin</artifactId>
+        <version>2023.3.1</version>
+        <configuration>
+          <JVMArgs>
+            <JVMArg>--enable-preview</JVMArg>
+          </JVMArgs>
+          <mainClassName>TestCreator.Main</mainClassName>
+          <openingPath>/</openingPath>
         </configuration>
       </plugin>
     </plugins>
